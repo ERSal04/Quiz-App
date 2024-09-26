@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 import 'package:quiz_app_again/answer_button.dart';
 import 'package:quiz_app_again/data/questions.dart';
+// import 'package:quiz_app_again/models/quiz_question.dart';
 
 class QuestionsScreen extends StatefulWidget {
   const QuestionsScreen({
@@ -23,15 +24,14 @@ class _QuestionsScreenState extends State<QuestionsScreen> {
 
   void answerQuestion(String selectedAnswer) {
     widget.onSelectAnswer(selectedAnswer);
-    // currentQuestionIndex = currentQuestionIndex + 1;
-    // currentQuestionIndex += 1;
     setState(() {
-      currentQuestionIndex++; // increments the value by 1
+      currentQuestionIndex++;
     });
   }
 
   @override
   Widget build(context) {
+    // final currentQuestion = questions.shuffledQuestions([currentQuestionIndex]);
     final currentQuestion = questions[currentQuestionIndex];
 
     return SizedBox(
@@ -42,6 +42,18 @@ class _QuestionsScreenState extends State<QuestionsScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
+            
+            //Implamented a Progress bar here.
+            LinearProgressIndicator(
+              value: (currentQuestionIndex + 1) / questions.length,
+              minHeight: 10,
+              backgroundColor: Colors.grey[300],
+              color: Colors.blue,
+            ),
+
+            const SizedBox(
+              height: 30,
+            ),
             Text(
               currentQuestion.text,
               style: GoogleFonts.lato(
@@ -52,6 +64,7 @@ class _QuestionsScreenState extends State<QuestionsScreen> {
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 30),
+            //Figure out a way to not only randomized the answers but the questions as well.
             ...currentQuestion.shuffledAnswers.map((answer) {
               return AnswerButton(
                 answerText: answer,
@@ -66,3 +79,7 @@ class _QuestionsScreenState extends State<QuestionsScreen> {
     );
   }
 }
+
+// extension on List<QuizQuestion> {
+//   shuffledQuestions(List<int> list) {}
+// }

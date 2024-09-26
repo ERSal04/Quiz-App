@@ -1,5 +1,17 @@
 import 'package:quiz_app_again/models/quiz_question.dart';
 
+class Questions {
+  const Questions(this.questions);
+
+  final List<int> questions;
+
+  List<int> get shuffledQuestions {
+    final shuffledList = List.of(questions);
+    shuffledList.shuffle();
+    return shuffledList;
+  }
+}
+
 const questions = [
   QuizQuestion(
     'What are the main building blocks of Flutter UIs?',
